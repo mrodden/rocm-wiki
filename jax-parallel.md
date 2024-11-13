@@ -100,3 +100,10 @@ ENTRY main.9_spmd {
 }
 
 ```
+
+
+`all-reduce-start` and `all-reduce-done` map to operation in the NCCL APIs in the gpu runtime implemenation here https://github.com/openxla/xla/blob/main/xla/service/gpu/runtime/nccl_all_reduce_thunk.cc#L45
+
+NCCL APIs have a switch to use NCCL or RCCL, determined at XLA compile time, here https://github.com/openxla/xla/blob/main/xla/service/gpu/runtime/nccl_api.cc#L47-L56
+
+This means the PJRT plugin for ROCm, which is essentially XLA, will have the RCCL code linked, as it fulfills the NCCL APIs.
